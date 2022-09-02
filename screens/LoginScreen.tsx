@@ -29,7 +29,7 @@ export default function LoginScreen() {
   const [email, setEmail] = React.useState({ value: '', error: '' })
   const [password, setPassword] = React.useState({ value: '', error: '' })
 
-  auth.onAuthStateChanged(() => { // evento quando logar/desligar
+  auth.onAuthStateChanged(() => { // evento quando logar/deslogar
     if(auth.currentUser){ // verifica se foi feito login
       navigation.navigate('Root', { screen: 'UserScreen' })
     }
@@ -57,11 +57,11 @@ export default function LoginScreen() {
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
     if(emailError){
-      alertMessage('Ops!', emailError);
+      alertMessage('error', 'Ops!', emailError);
       return;
     }
     if(passwordError){
-      alertMessage('Ops!', passwordError);
+      alertMessage('error', 'Ops!', passwordError);
       return;
     }
     const auth = getAuth();

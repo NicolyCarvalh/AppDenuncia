@@ -19,6 +19,8 @@ import * as Location from 'expo-location';
 import { alertMessage } from 'helpers/alertMessage';
 import { textValidator } from 'helpers/textValidator';
 import { findLocation } from 'helpers/locationHelper';
+import { handleFirebaseError } from 'helpers/firebaseHandlerExceptions';
+import isOnline  from 'helpers/firebaseConnectionStatus'
 
 export default function UserScreen() {
   const navigation = useNavigation();
@@ -51,7 +53,7 @@ export default function UserScreen() {
   async function send(){
     let descError = textValidator(description.value);
     if(descError){
-      alertMessage('Ops!', descError)
+      alertMessage("error", 'Ops!', descError)
       return;
     }
 
@@ -76,14 +78,11 @@ export default function UserScreen() {
     addDoc(dbRef, data)
       .then(async () => {
           console.log("Document has been added successfully");
-          alertMessage('Sucesso!', "Sua ocorrência foi enviada com sucesso!");
-          navigation.navigate('Root', {name: 'UserScreen'})
+          alertMessage('success', 'Sucesso!', "Sua ocorrência foi enviada com sucesso!");
+          //navigation.navigate('Root', {name: 'UserScreen'})
       })
       .catch(error => {
-          console.log(error);
-          Alert.alert('Ops!', error, [
-            { text: 'OK'},
-          ]);
+          handleFirebaseError(error)
       })
   }
 

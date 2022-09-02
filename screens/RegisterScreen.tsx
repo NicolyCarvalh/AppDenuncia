@@ -50,15 +50,15 @@ export default function RegisterScreen() {
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
     if(emailError){
-      alertMessage('Ops!', emailError);
+      alertMessage("error", 'Ops!', emailError);
       return;
     }
     if(nameError){
-      alertMessage('Ops!', nameError);
+      alertMessage("error", 'Ops!', nameError);
       return;
     }
     if(passwordError){
-      alertMessage('Ops!', passwordError);
+      alertMessage("error", 'Ops!', passwordError);
       return;
     }
     const auth = getAuth();

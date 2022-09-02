@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import {Image, Pressable } from 'react-native';
+import {Image } from 'react-native';
 
 //components
 import { Text, View } from '../components/Themed';
@@ -8,24 +8,18 @@ import { Text, View } from '../components/Themed';
 // styles
 import main from '../styles/main';
 
-// expo libraries
-import * as Location from 'expo-location';
-
 //firebase
 import { collection, query, where, getDocs, onSnapshot} from "firebase/firestore";
 
 //config
 import { auth, db } from '../config/firebase';
 
-//helpers
-import { alertMessage } from 'helpers/alertMessage';
-import { findLocation } from 'helpers/locationHelper';
+//main button
+import PlusButton from '../components/PlusButton';
 
 //assets
-import plus from 'assets/images/plus.png';
 import user from 'assets/images/user.png';
-import exclamation from 'assets/images/exclamation2.png'; 
-import logouticon from 'assets/images/logout.png';
+import exclamation from 'assets/images/exclamation2.png';
 
 export default function UserScreen() {
   const navigation = useNavigation();
@@ -54,27 +48,6 @@ export default function UserScreen() {
       console.log(`Encountered error: ${err}`);
     });
 
-  }
-  async function logout(){
-    try {
-      await auth.signOut();
-      navigation.navigate('Root', { screen: 'LoginScreen' })
-  
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async function openReport(){
-    let { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== 'granted') {
-      alertMessage(
-        "Permissão insuficiente",
-        "Desculpa, nós precisamos da permissão de Localização para isso funcionar");
-      return;
-    }
-    navigation.navigate('Root', { screen: 'ReportScreen' })
-  
   }
 
   let image;
@@ -118,21 +91,8 @@ export default function UserScreen() {
         
       </View>
 
-      <View style={main.cardProfileIcon}>
-        <View style={{width: '20%', backgroundColor:'transparent'}}><Pressable onPress={openReport}><Image source={plus} style={{width: 40, height: 40}}></Image></Pressable></View>
-        <View style={{width: '70%', backgroundColor:'transparent', marginTop:5}}><Pressable onPress={openReport}>
-          <Text style={{color:'#000', fontFamily:'poppins', fontWeight: "bold", textAlign: 'left', fontSize: 20}}>Nova denúncia</Text>
-        </Pressable></View>
-      </View>
-
-      <View style={main.cardProfileIcon}>
-        <View style={{width: '20%', backgroundColor:'transparent'}}><Pressable onPress={logout}><Image source={logouticon} style={{width: 40, height: 40}}></Image></Pressable></View>
-        <View style={{width: '70%', backgroundColor:'transparent', marginTop:5}}><Pressable onPress={logout}>
-          <Text style={{color:'#000', fontFamily:'poppins', fontWeight: "bold", textAlign: 'left', fontSize: 20}}>Sair</Text>
-        </Pressable></View>
-      </View>
+      <PlusButton />
 
     </View>
   )
 };
-

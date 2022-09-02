@@ -11,5 +11,5 @@ export function handleFirebaseError(err) {
     errorMessage = "O email informado não está registrado."
   }
 
-  alertMessage("Ops", errorMessage)
+  alertMessage("error", "Ops", errorMessage)
 }
