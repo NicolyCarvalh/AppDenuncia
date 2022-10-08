@@ -4,8 +4,6 @@ import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 import {SimpleLineIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import {Image, TextInput, TouchableOpacity} from 'react-native';
 import { Text, View ,} from '../components/Themed';
-import MenuIcon from '../components/MenuIcon';
-import { useEffect } from 'react';
 import main from '../styles/main';
 
 import logo from 'assets/images/capivara.png'; 
@@ -21,64 +19,72 @@ import { emailValidator } from 'helpers/emailValidator'
 import { passwordValidator } from 'helpers/passwordValidator'
 import { handleFirebaseError } from 'helpers/firebaseHandlerExceptions';
 
-import { auth } from '../config/firebase';
+import { auth } from 'config/firebase';
+import AppButton from '../components/AppButton';
 
-export default function LoginScreen() {
-  const navigation = useNavigation();
+interface Props {
+  navigation: any
+}
 
-  const [email, setEmail] = React.useState({ value: '', error: '' })
-  const [password, setPassword] = React.useState({ value: '', error: '' })
+export default class LoginScreen extends React.Component<Props> {
 
-  auth.onAuthStateChanged(() => { // evento quando logar/deslogar
-    if(auth.currentUser){ // verifica se foi feito login
-      navigation.navigate('Root', { screen: 'UserScreen' })
-    }
-  })
+  constructor(props: any){
+    super(props)
+    this.state = {
+      email: '',
+      password: ''
+    };
 
-  useEffect(() => {
-    navigation.setOptions({
-      showHeader: true,
-      headerLeft: (props: StackHeaderLeftButtonProps) => (<MenuIcon/>)
-    });
-  });
-
-  const signAnononly = () => {
-    const auth = getAuth();
-    signInAnonymously(auth)
-      .then(() => {
-        navigation.navigate('Root', { screen: 'UserScreen' })
-      })
-      .catch((error) => {
-        handleFirebaseError(error)
-      });
+    auth.onAuthStateChanged(() => { // evento quando logar/deslogar
+      if(auth.currentUser){ // verifica se foi feito login
+        this.props.navigation.navigate('UserScreen')
+      }
+    })
   }
 
-  const onLogInPressed = () => {
-    const emailError = emailValidator(email.value)
-    const passwordError = passwordValidator(password.value)
-    if(emailError){
-      alertMessage('error', 'Ops!', emailError);
-      return;
-    }
-    if(passwordError){
-      alertMessage('error', 'Ops!', passwordError);
-      return;
-    }
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, email.value, password.value)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        navigation.navigate('Root', { screen: 'UserScreen' })
-      })
-      .catch((error) => {
-        handleFirebaseError(error)
-      });
-  }
+  
+  
+  render(): React.ReactNode {
 
-  return (
-    
-    <View style={main.centered}>
+    // funcoes
+    const onLogInPressed = () => {
+      let email = this.state.email;
+      let password = this.state.password;
+      const emailError = emailValidator(email)
+      const passwordError = passwordValidator(password)
+      if(emailError){
+        alertMessage('error', 'Ops!', emailError);
+        return;
+      }
+      if(passwordError){
+        alertMessage('error', 'Ops!', passwordError);
+        return;
+      }
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          this.props.navigation.navigate('UserScreen')
+        })
+        .catch((error) => {
+          handleFirebaseError(error)
+        });
+    }
+
+    const signAnononly = () => {
+      const auth = getAuth();
+      signInAnonymously(auth)
+        .then(() => {
+          this.props.navigation.navigate('UserScreen')
+        })
+        .catch((error) => {
+          handleFirebaseError(error)
+        });
+    }
+
+    return (
+      <View style={main.centered}>
       <Image source={background} style={{height: '40%', borderBottomLeftRadius: 20, borderBottomRightRadius: 20, top: 0, width: '100%', position: 'absolute'}}/>
       <Image source={logo} style={{marginBottom: 2}}/>
       
@@ -89,8 +95,8 @@ export default function LoginScreen() {
             <View style={main.viewIcon}>
               <SimpleLineIcons style={main.inputIcon} name="user" size={20} color="#343a40" />
             </View>
-            <TextInput style={main.input} value={email.value}
-                onChangeText={(text) => setEmail({ value: text, error: '' })}
+            <TextInput style={main.input}
+                onChangeText={(text) => this.setState( { email: text })}
                 autoCapitalize="none"
                 textContentType="emailAddress"
                 keyboardType="email-address" placeholder="Digite seu e-mail" />
@@ -100,13 +106,12 @@ export default function LoginScreen() {
             <View style={main.viewIcon}>
               <MaterialCommunityIcons  style={main.inputIcon} name="key" size={20} color="#343a40" />
             </View>
-            <TextInput style={main.input} onChangeText={(text) => setPassword({ value: text, error: '' })} placeholder="Digite sua senha" secureTextEntry={true}/>
+            <TextInput style={main.input} onChangeText={(text) => this.setState( { password: text })} placeholder="Digite sua senha" secureTextEntry={true}/>
           </View>
 
-          <TouchableOpacity style={main.buttonSignOut} onPress={onLogInPressed}>
-            <Text style={main.buttonText}>Fazer Login</Text>
-          </TouchableOpacity >
-          <TouchableOpacity onPress={() => {navigation.navigate('Root', { screen: 'RegisterScreen' })}}>
+          <AppButton text='Fazer Login' onPress={onLogInPressed}/>
+
+          <TouchableOpacity onPress={() => {this.props.navigation.navigate('Root', { screen: 'RegisterScreen' })}}>
             <Text style={{ alignSelf:'center', margin: 15, color: "#1177d1"}}>Criar uma conta</Text>
           </TouchableOpacity>
           
@@ -138,5 +143,6 @@ export default function LoginScreen() {
       
 
     </View>
-  )
+    )
+  }
 };

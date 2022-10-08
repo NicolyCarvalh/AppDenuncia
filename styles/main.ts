@@ -112,15 +112,7 @@ export default StyleSheet.create({
     color: '#495057',
   },
 
-  richinput: {
-    marginTop: 15,
-    width: "100%",
-    borderWidth: 1,
-    borderBottomColor: '#c9cbcc',
-    borderRadius: 1,
-    borderColor: 'transparent',
-    color: '#495057',
-  },
+  
   loginField: {
       flexDirection: 'row',
       justifyContent: 'center',
