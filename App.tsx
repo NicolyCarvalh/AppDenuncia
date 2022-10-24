@@ -18,6 +18,7 @@ import UserScreen from './screens/UserScreen';
 import ReportScreen from './screens/ReportScreen';
 import CidadaoScreen from './screens/reports/CidadaoScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import ColetaScreen from './screens/reports/ColetaScreen';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -34,7 +35,8 @@ export default function App() {
             <Stack.Screen component={ReportScreen}  name="ReportScreen" options={{headerShown: true, title: "Nova Denúncia"}}></Stack.Screen>
             <Stack.Screen component={RegisterScreen}  name="RegisterScreen" options={{headerShown: false}}></Stack.Screen>
             
-            <Stack.Screen component={CidadaoScreen}  name="CidadaoScreen" options={{headerShown: true, title: "Nova Denúncia - Cidadão"}}></Stack.Screen>
+            <Stack.Screen component={ColetaScreen}  name="ColetaScreen" options={{headerShown: true, title: "Nova Ocorrência - Coleta"}}></Stack.Screen>
+            
 
           </Stack.Navigator>
         </NavigationContainer>
