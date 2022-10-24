@@ -12,7 +12,7 @@ interface Props {
     onChangeText: (text: string) => void
 }
 
-export default class AppButton extends React.Component<Props>{
+export default class RichTextBox extends React.Component<Props>{
 
     constructor(props: any){
         super(props)

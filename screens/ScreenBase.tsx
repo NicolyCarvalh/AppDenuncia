@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { StackActions } from '@react-navigation/native';
 
 interface Props {
   navigation: any
@@ -12,10 +13,9 @@ class ScreenBase extends React.Component<Props>{
     }
 
     resetScreen(){
-        this.props.navigation.reset({ // reseta os campos de todas as janelas do path Root
-            index: 0,
-            routes: [{ name: 'Root' }]
-        })
+       // this.props.navigation.dispatch(
+        //    StackActions.pop()
+        //  );
     }
     
 

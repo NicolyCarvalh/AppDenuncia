@@ -8,6 +8,8 @@ import { getFirestore } from "firebase/firestore";
 
 import {apiKey, authDomain, projectId, storageBucket, messagingSenderId, appId, measurementId} from '@env'
 
+console.log(apiKey)
+
 const firebaseConfig = {apiKey, authDomain, projectId, storageBucket, messagingSenderId, appId, measurementId};
 export const app = firebase.initializeApp(firebaseConfig);
 export const auth = initializeAuth(app, { persistence: getReactNativePersistence(AsyncStorage) });

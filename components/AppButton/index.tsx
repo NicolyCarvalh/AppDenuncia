@@ -15,9 +15,16 @@ export default class AppButton extends React.Component<Props>{
         super(props)
     }
 
+    
     render(): React.ReactNode {
+
+        const pressButton = () => {
+            this.props.onPress();
+        }
+    
+
         return(
-            <TouchableOpacity style={styles.button} onPress={this.props.onPress}>
+            <TouchableOpacity style={styles.button} onPress={pressButton}>
                 <Text style={styles.buttonText}>{this.props.text}</Text>
             </TouchableOpacity >
         )

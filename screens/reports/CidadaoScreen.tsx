@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-import { Pressable } from 'react-native';
+import { Pressable, ScrollView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 
 import {Image, TextInput, Alert, TouchableOpacity} from 'react-native';
@@ -24,7 +24,7 @@ import RichTextBox from '../../components/RichTextBox';
 import NumericUpDown from '../../components/NumericUpDown';
 import AppButton from '../../components/AppButton';
 import ComboBox from '../../components/ComboBox';
-import ReportData from '../../model/ReportData';
+import CidadaoModel from '../../model/CidadaoModel';
 
 
 export default class CidadaoScreen extends ScreenBase{
@@ -34,23 +34,16 @@ export default class CidadaoScreen extends ScreenBase{
       this.state = {
         //form
         description: '',
-        height: 1,
         peso: 60,
         sexo: 'M',
 
         //state combobox
-        items: [
-          {label: 'Masculino', value: 'M'},
-          {label: 'Feminino', value: 'F'}
-        ]
+        items_sexo: [ 'Masculino', 'Feminino']
       };
     }
 
     render(){
       const send = async() => {
-        console.log(this.state.peso)
-        console.log(this.state.description)
-        console.log(this.state.sexo)
         let descError = textValidator(this.state.description);
         if(descError){
           alertMessage("error", 'Ops!', descError)
@@ -59,16 +52,15 @@ export default class CidadaoScreen extends ScreenBase{
 
         let location = await findLocation();
         console.log(location);
-        let reportData = new ReportData(auth.currentUser?.uid, Timestamp.fromDate(new Date()), 
-                                          this.state.description, this.state.peso, this.state.sexo,  new GeoPoint(location.coords.latitude, location.coords.longitude), 1);
-        console.log(reportData);
+        let cidadaoModel = new CidadaoModel(auth.currentUser?.uid, Timestamp.fromDate(new Date()), 
+                                  new GeoPoint(location.coords.latitude, location.coords.longitude), this.state.sexo, this.state.description, this.state.peso);
+        console.log(cidadaoModel);
 
-        const dbRef = collection(db, "denuncias");
-        addDoc(dbRef, reportData)
+        const dbRef = collection(db, "cidadao");
+        addDoc(dbRef, JSON.parse( JSON.stringify(cidadaoModel)))
           .then(async () => {
-              console.log("Document has been added successfully");
               alertMessage('success', 'Sucesso!', "Sua ocorrência foi enviada com sucesso!");
-              //navigation.navigate('Root', {name: 'UserScreen'})
+              //this.resetScreen();
           })
           .catch(error => {
               handleFirebaseError(error)
@@ -76,7 +68,8 @@ export default class CidadaoScreen extends ScreenBase{
       }
 
       return (
-        <View style={main.centered} >
+        <ScrollView>
+          <View style={main.centered} >
 
             <RichTextBox text='Descreva a situação da pessoa' 
               placeHolder='O cidadão está embriagado e incomodando outros moradores.'
@@ -85,19 +78,17 @@ export default class CidadaoScreen extends ScreenBase{
             <NumericUpDown text='Peso aproximado (kg)' 
                 default={60}
                 onChange={value => this.setState({ peso: value })}/>
-    
+
             <ComboBox text='Sexo da pessoa' 
               value={this.state.sexo} 
               placeHolder= 'Selecione o sexo'
-              items={this.state.items}
-              onChangeValue={value => {
-                console.log(value);
-                this.setState( {sexo: value })}}/>
+              items={this.state.items_sexo}
+              onChangeValue={value => this.setState( {sexo: value })}/>
 
-            <View style={{marginBottom: '10%'}}></View>
-            
             <AppButton text='Enviar' onPress={send}/>
-        </View>
+          </View>
+        </ScrollView>
+        
       );
     }
 
