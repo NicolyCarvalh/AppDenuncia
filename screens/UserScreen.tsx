@@ -70,7 +70,7 @@ export default class UserScreen extends React.Component<Props> {
     }
 
     const handlePress = async (name) => {
-      if(name == 'bt_new'){
+      if(name == 'bt_new_local'){
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
           alertMessage('error',
@@ -78,8 +78,20 @@ export default class UserScreen extends React.Component<Props> {
             "Desculpa, nós precisamos da permissão de Localização para isso funcionar");
           return;
         }
-        this.props.navigation.navigate('ReportScreen')
-      }else if(name == 'bt_logout'){
+        this.props.navigation.navigate('LocalScreen')
+      }
+      else if(name == 'bt_new_coleta'){
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          alertMessage('error',
+            "Permissão insuficiente",
+            "Desculpa, nós precisamos da permissão de Localização para isso funcionar");
+          return;
+        }
+        this.props.navigation.navigate('ColetaScreen')
+      }
+      
+      else if(name == 'bt_logout'){
         try {
           await auth.signOut();
           this.props.navigation.navigate('LoginScreen')
@@ -134,13 +146,22 @@ export default class UserScreen extends React.Component<Props> {
 };
 
 
-
+//#62990c
 const actions = [
   {
-    text: "Novo",
+    text: "Nova coleta",
     icon: require("assets/images/icons/plus.png"),
-    name: "bt_new",
+    name: "bt_new_coleta",
     position: 1,
+    buttonSize: 50,
+    textStyle: {fontSize: 16, fontWeight: 'bold' }
+  },
+
+  {
+    text: "Novo local",
+    icon: require("assets/images/icons/plus.png"),
+    name: "bt_new_local",
+    position: 2,
     buttonSize: 50,
     textStyle: {fontSize: 16, fontWeight: 'bold' }
   },
@@ -149,7 +170,7 @@ const actions = [
     text: "Sair",
     icon: require("assets/images/icons/logout.png"),
     name: "bt_logout",
-    position: 2,
+    position: 3,
     buttonSize: 50,
     textStyle: {fontSize: 16, fontWeight: 'bold' }
   },
