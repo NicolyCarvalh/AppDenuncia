@@ -2,9 +2,9 @@ import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 import { Pressable, ScrollView } from 'react-native';
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 
-import {Image, TextInput, Alert, TouchableOpacity} from 'react-native';
+import { Image, TextInput, Alert, TouchableOpacity } from 'react-native';
 import { Text, View } from '../../components/Themed';
 import main from '../../styles/main';
 
@@ -26,67 +26,71 @@ import AppButton from '../../components/AppButton';
 import ComboBox from '../../components/ComboBox';
 import CidadaoModel from '../../model/CidadaoModel';
 import ColetaModel from '../../model/ColetaModel';
+import LocalModel from '../../model/LocalModel';
 
 
-export default class LocalScreen extends ScreenBase{
+export default class LocalScreen extends ScreenBase {
 
-    constructor(props: any) {
-      super(props);
-      this.state = {
-        //form
-        nome: '',
-        ponto_referencia: '',
-        contato: '',
-        telefone: '',
-        retorno: 0,
-        obs: ''
-      };
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      //form
+      nome: '',
+      ponto_referencia: '',
+      contato: '',
+      telefone: '',
+      retorno: 0,
+      obs: ''
+    };
+  }
+
+  render() {
+
+    const send = async () => {
+
+      let nome = this.state.nome;
+      let ponto_referencia = this.state.ponto_referencia;
+      let contato = this.state.contato;
+      let telefone = this.state.telefone;
+      let retorno = this.state.retorno;
+      let obs = this.state.obs;
+
+      let location = await findLocation();
+
+      let localModel = new LocalModel(auth.currentUser?.uid, Timestamp.fromDate(new Date()), new GeoPoint(location.coords.latitude, location.coords.longitude)
+        , nome, ponto_referencia, contato, telefone, retorno, obs);
+
+      const dbRef = collection(db, "local");
+      addDoc(dbRef, JSON.parse(JSON.stringify(localModel)))
+        .then(async () => {
+          alertMessage('success', 'Sucesso!', "Sua ocorrência foi enviada com sucesso!"); // https://github.com/calintamas/react-native-toast-message/blob/HEAD/docs/api.md
+          //this.resetScreen();
+        })
+        .catch(error => {
+          handleFirebaseError(error)
+        })
     }
 
-    render(){
+    return (
+      <ScrollView>
+        <View style={main.centered} >
+          <RichTextBox text="Nome" placeHolder='Digite o nome' onChangeText={(valor) => this.setState({ nome: valor })}></RichTextBox>
 
-      const send = async() => {
+          <RichTextBox text="Ponto de referência" placeHolder='Digite o ponto de referência' onChangeText={(valor) => this.setState({ ponto_referencia: valor })}></RichTextBox>
 
-        let litros = this.state.litros;
-        let retorno = this.state.retorno;
-        let galoes = this.state.galoes;
-        let obs = this.state.obs;
+          <RichTextBox text="Contato" placeHolder='Digite o contato' onChangeText={(valor) => this.setState({ contato: valor })}></RichTextBox>
 
-        let location = await findLocation();
-      
-        let coletaModel = new ColetaModel(auth.currentUser?.uid, Timestamp.fromDate(new Date()), new GeoPoint(location.coords.latitude, location.coords.longitude), litros, retorno, galoes, obs);
+          <RichTextBox text="Telefone" placeHolder='Digite o telefone' onChangeText={(valor) => this.setState({ telefone: valor })}></RichTextBox>
 
-        const dbRef = collection(db, "coleta");
-        addDoc(dbRef, JSON.parse( JSON.stringify(coletaModel)))
-          .then(async () => {
-              alertMessage('success', 'Sucesso!', "Sua ocorrência foi enviada com sucesso!"); // https://github.com/calintamas/react-native-toast-message/blob/HEAD/docs/api.md
-              //this.resetScreen();
-          })
-          .catch(error => {
-              handleFirebaseError(error)
-          })
-      }
+          <NumericUpDown text="Retorno" default={0} onChange={(valor) => this.setState({ retorno: valor })}></NumericUpDown>
 
-      return (
-        <ScrollView>
-          <View style={main.centered} >
+          <RichTextBox text="Observação" placeHolder='Digite alguma observação' onChangeText={(valor) => this.setState({ obs: valor })}></RichTextBox>
 
-            <RichTextBox text="Ponto de referência" placeHolder='Digite o ponto de referência' onChangeText={(valor) => this.setState({contato: valor})}></RichTextBox>
+          <AppButton text='Enviar' onPress={send} />
+        </View>
+      </ScrollView>
 
-
-            <RichTextBox text="Contato" placeHolder='Digite o contato' onChangeText={(valor) => this.setState({contato: valor})}></RichTextBox>
-
-            <RichTextBox text="Telefone" placeHolder='Digite o telefone' onChangeText={(valor) => this.setState({telefone: valor})}></RichTextBox>
-
-            <NumericUpDown text="Retorno"   default={0}  onChange={(valor) => this.setState({retorno: valor})}></NumericUpDown>
-
-            <RichTextBox text="Observação" placeHolder='Digite alguma observação' onChangeText={(valor) => this.setState({obs: valor})}></RichTextBox>
-
-            <AppButton text='Enviar' onPress={send}/>
-          </View>
-        </ScrollView>
-        
-      );
-    }
+    );
+  }
 
 }
