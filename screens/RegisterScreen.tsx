@@ -15,7 +15,7 @@ import main from '../styles/main';
 
 //assets
 import logo from 'assets/images/capivara.png';
-import background from 'assets/cpan.jpg';
+import background from 'assets/background.png';
 
 //firebase
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";

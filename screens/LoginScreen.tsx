@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
-import {SimpleLineIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import {Image, TextInput, TouchableOpacity} from 'react-native';
-import { Text, View ,} from '../components/Themed';
+import { SimpleLineIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Image, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, } from '../components/Themed';
 import main from '../styles/main';
 
-import logo from 'assets/images/capivara.png'; 
+import logo from 'assets/images/capivara.png';
 import anonimo from 'assets/images/anonimo.png';
 import google from 'assets/images/google.png';
-import background from 'assets/cpan.jpg';
+import background from 'assets/background.png';
 
-import { getAuth, signInAnonymously, signInWithEmailAndPassword  } from "firebase/auth";
+import { getAuth, signInAnonymously, signInWithEmailAndPassword } from "firebase/auth";
 
 //helpers
 import { alertMessage } from 'helpers/alertMessage';
@@ -28,7 +28,7 @@ interface Props {
 
 export default class LoginScreen extends React.Component<Props> {
 
-  constructor(props: any){
+  constructor(props: any) {
     super(props)
     this.state = {
       email: '',
@@ -36,14 +36,14 @@ export default class LoginScreen extends React.Component<Props> {
     };
 
     auth.onAuthStateChanged(() => { // evento quando logar/deslogar
-      if(auth.currentUser){ // verifica se foi feito login
+      if (auth.currentUser) { // verifica se foi feito login
         this.props.navigation.navigate('UserScreen')
       }
     })
   }
 
-  
-  
+
+
   render(): React.ReactNode {
 
     // funcoes
@@ -52,11 +52,11 @@ export default class LoginScreen extends React.Component<Props> {
       let password = this.state.password;
       const emailError = emailValidator(email)
       const passwordError = passwordValidator(password)
-      if(emailError){
+      if (emailError) {
         alertMessage('error', 'Ops!', emailError);
         return;
       }
-      if(passwordError){
+      if (passwordError) {
         alertMessage('error', 'Ops!', passwordError);
         return;
       }
@@ -85,44 +85,46 @@ export default class LoginScreen extends React.Component<Props> {
 
     return (
       <View style={main.centered}>
-      <Image source={background} style={{height: '40%', borderBottomLeftRadius: 20, borderBottomRightRadius: 20, top: 0, width: '100%', position: 'absolute'}}/>
-      <Image source={logo} style={{marginBottom: 2}}/>
-      
-      <View style={main.card}>
-          <Text style={{color: "#000", fontWeight: "bold", fontSize: 18}}>Seja bem-vindo(a)!</Text>
-          <Text style={{color: "#000", fontSize: 15}}>Faça o login ou entre anonimamente.</Text>
+        <Image source={background} style={{ height: '40%', borderBottomLeftRadius: 20, borderBottomRightRadius: 20, top: 0, width: '100%', position: 'absolute' }} />
+        <Image source={logo} style={{ marginBottom: 2 }} />
+
+        <View style={main.card}>
+          <Text style={{ color: "#000", fontWeight: "bold", fontSize: 18 }}>Seja bem-vindo(a)!</Text>
+          <Text style={{ color: "#000", fontSize: 15 }}>Faça o login ou entre anonimamente.</Text>
           <View style={main.loginField}>
             <View style={main.viewIcon}>
               <SimpleLineIcons style={main.inputIcon} name="user" size={20} color="#343a40" />
             </View>
             <TextInput style={main.input}
-                onChangeText={(text) => this.setState( { email: text })}
-                autoCapitalize="none"
-                textContentType="emailAddress"
-                keyboardType="email-address" placeholder="Digite seu e-mail" />
+              onChangeText={(text) => this.setState({ email: text })}
+              autoCapitalize="none"
+              textContentType="emailAddress"
+              keyboardType="email-address" placeholder="Digite seu e-mail" />
           </View>
 
           <View style={main.loginField}>
             <View style={main.viewIcon}>
-              <MaterialCommunityIcons  style={main.inputIcon} name="key" size={20} color="#343a40" />
+              <MaterialCommunityIcons style={main.inputIcon} name="key" size={20} color="#343a40" />
             </View>
-            <TextInput style={main.input} onChangeText={(text) => this.setState( { password: text })} placeholder="Digite sua senha" secureTextEntry={true}/>
+            <TextInput style={main.input} onChangeText={(text) => this.setState({ password: text })} placeholder="Digite sua senha" secureTextEntry={true} />
           </View>
 
-          <AppButton text='Fazer Login' onPress={onLogInPressed}/>
+          <AppButton text='Fazer Login' onPress={onLogInPressed} />
 
-          <TouchableOpacity onPress={() => {this.props.navigation.navigate('RegisterScreen')}}>
-            <Text style={{ alignSelf:'center', margin: 15, color: "#1177d1"}}>Criar uma conta</Text>
+          <TouchableOpacity onPress={() => { this.props.navigation.navigate('RegisterScreen') }}>
+            <Text style={{ alignSelf: 'center', margin: 15, color: "#1177d1" }}>Criar uma conta</Text>
           </TouchableOpacity>
-          
-          <View style={{flexDirection: 'row', backgroundColor: 'transparent'}}>
-            <View style={{backgroundColor: 'black', height: 1, flex: 1, alignSelf: 'center'}} />
-            <Text style={{ alignSelf:'center', paddingHorizontal:5, color: "#000"}}>ou se preferir</Text>
-            <View style={{backgroundColor: 'black', height: 1, flex: 1, alignSelf: 'center'}} />
+
+          <View style={{ flexDirection: 'row', backgroundColor: 'transparent' }}>
+            <View style={{ backgroundColor: 'black', height: 1, flex: 1, alignSelf: 'center' }} />
+            <Text style={{ alignSelf: 'center', paddingHorizontal: 5, color: "#000" }}>ou se preferir</Text>
+            <View style={{ backgroundColor: 'black', height: 1, flex: 1, alignSelf: 'center' }} />
           </View>
 
-          <View style={{backgroundColor:'transparent', flexDirection: 'row',
-        flexWrap: 'wrap',}}>
+          <View style={{
+            backgroundColor: 'transparent', flexDirection: 'row',
+            flexWrap: 'wrap',
+          }}>
             <TouchableOpacity style={main.buttonOtherLogin} activeOpacity={0.5} >
               <Image
                 source={google}
@@ -137,12 +139,12 @@ export default class LoginScreen extends React.Component<Props> {
               />
             </TouchableOpacity>
           </View>
-          
+
+
+        </View>
+
 
       </View>
-      
-
-    </View>
     )
   }
 };
