@@ -23,8 +23,6 @@ import ScreenBase from '../ScreenBase';
 import RichTextBox from '../../components/RichTextBox';
 import NumericUpDown from '../../components/NumericUpDown';
 import AppButton from '../../components/AppButton';
-import ComboBox from '../../components/ComboBox';
-import CidadaoModel from '../../model/CidadaoModel';
 import ColetaModel from '../../model/ColetaModel';
 
 

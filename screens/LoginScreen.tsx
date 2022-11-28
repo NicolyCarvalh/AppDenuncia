@@ -38,6 +38,8 @@ export default class LoginScreen extends React.Component<Props> {
     auth.onAuthStateChanged(() => { // evento quando logar/deslogar
       if (auth.currentUser) { // verifica se foi feito login
         this.props.navigation.navigate('UserScreen')
+        
+        alertMessage('info', 'Login', "Você foi automaticamente logado");
       }
     })
   }
@@ -63,7 +65,7 @@ export default class LoginScreen extends React.Component<Props> {
       const auth = getAuth();
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          // Signed in
+          alertMessage('success', 'Sucesso!', "Você logou com sucesso");
           const user = userCredential.user;
           this.props.navigation.navigate('UserScreen')
         })
@@ -76,6 +78,8 @@ export default class LoginScreen extends React.Component<Props> {
       const auth = getAuth();
       signInAnonymously(auth)
         .then(() => {
+          
+          alertMessage('success', 'Sucesso!', "Você logou como anônimo com sucesso");
           this.props.navigation.navigate('UserScreen')
         })
         .catch((error) => {
