@@ -16,6 +16,7 @@ export default class ReportScreen extends React.Component<Props> {
       value: 0,
       items: [
         {label: 'Coleta', value: 'ColetaScreen'},
+        {label: 'Local', value: 'LocalScreen'},
       ]
     }
   }

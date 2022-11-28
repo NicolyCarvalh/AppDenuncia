@@ -9,16 +9,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 
 import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
 
 import Toast from 'react-native-toast-message';
 
 import LoginScreen from './screens/LoginScreen';
 import UserScreen from './screens/UserScreen';
 import ReportScreen from './screens/ReportScreen';
-import CidadaoScreen from './screens/reports/CidadaoScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ColetaScreen from './screens/reports/ColetaScreen';
+import LocalScreen from './screens/reports/LocalScreen';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -30,14 +29,14 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator>
 
-            <Stack.Screen component={LoginScreen} name="LoginScreen" options={{headerShown: false}}></Stack.Screen>
-            <Stack.Screen component={UserScreen}  name="UserScreen" options={{headerShown: false}}></Stack.Screen>
-            <Stack.Screen component={ReportScreen}  name="ReportScreen" options={{headerShown: true, title: "Nova Denúncia"}}></Stack.Screen>
+            <Stack.Screen component={LoginScreen}     name="LoginScreen"    options={{headerShown: false}}></Stack.Screen>
+            <Stack.Screen component={UserScreen}      name="UserScreen"     options={{headerShown: false}}></Stack.Screen>
+            <Stack.Screen component={ReportScreen}    name="ReportScreen"   options={{headerShown: true, title: "Nova Denúncia"}}></Stack.Screen>
             <Stack.Screen component={RegisterScreen}  name="RegisterScreen" options={{headerShown: false}}></Stack.Screen>
             
-            <Stack.Screen component={ColetaScreen}  name="ColetaScreen" options={{headerShown: true, title: "Nova Ocorrência - Coleta"}}></Stack.Screen>
-            
-
+            <Stack.Screen component={ColetaScreen}    name="ColetaScreen"   options={{headerShown: true, title: "Nova Ocorrência - Coleta"}}></Stack.Screen>
+            <Stack.Screen component={LocalScreen}     name="LocalScreen"    options={{headerShown: true, title: "Nova Ocorrência - Coleta"}}></Stack.Screen>
+      
           </Stack.Navigator>
         </NavigationContainer>
 

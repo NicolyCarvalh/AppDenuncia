@@ -6,9 +6,13 @@ import {
 } from 'firebase/auth/react-native';
 import { getFirestore } from "firebase/firestore";
 
-import {apiKey, authDomain, projectId, storageBucket, messagingSenderId, appId, measurementId} from '@env'
-
-console.log(apiKey)
+const apiKey = process.env['apiKey']
+const authDomain = process.env['authDomain']
+const projectId = process.env['projectId']
+const storageBucket = process.env['storageBucket']
+const messagingSenderId = process.env['messagingSenderId']
+const appId = process.env['appId']
+const measurementId = process.env['measurementId']
 
 const firebaseConfig = {apiKey, authDomain, projectId, storageBucket, messagingSenderId, appId, measurementId};
 export const app = firebase.initializeApp(firebaseConfig);

@@ -28,16 +28,18 @@ import CidadaoModel from '../../model/CidadaoModel';
 import ColetaModel from '../../model/ColetaModel';
 
 
-export default class ColetaScreen extends ScreenBase{
+export default class LocalScreen extends ScreenBase{
 
     constructor(props: any) {
       super(props);
       this.state = {
         //form
-        litros: 10,
-        retorno: 1,
-        galoes: 1,
-        obs: '',
+        nome: '',
+        ponto_referencia: '',
+        contato: '',
+        telefone: '',
+        retorno: 0,
+        obs: ''
       };
     }
 
@@ -69,11 +71,14 @@ export default class ColetaScreen extends ScreenBase{
         <ScrollView>
           <View style={main.centered} >
 
-            <NumericUpDown text="Coloque os litros" default={10} onChange={ (valor) => this.setState({litros: valor})}> </NumericUpDown>
+            <RichTextBox text="Ponto de referência" placeHolder='Digite o ponto de referência' onChangeText={(valor) => this.setState({contato: valor})}></RichTextBox>
 
-            <NumericUpDown text="Coloque o retorno" default={50} onChange={ (valor) => this.setState({retorno: valor})}> </NumericUpDown>
 
-            <NumericUpDown text="Coloque o galão"   default={0}  onChange={(valor) => this.setState({galoes: valor})}></NumericUpDown>
+            <RichTextBox text="Contato" placeHolder='Digite o contato' onChangeText={(valor) => this.setState({contato: valor})}></RichTextBox>
+
+            <RichTextBox text="Telefone" placeHolder='Digite o telefone' onChangeText={(valor) => this.setState({telefone: valor})}></RichTextBox>
+
+            <NumericUpDown text="Retorno"   default={0}  onChange={(valor) => this.setState({retorno: valor})}></NumericUpDown>
 
             <RichTextBox text="Observação" placeHolder='Digite alguma observação' onChangeText={(valor) => this.setState({obs: valor})}></RichTextBox>
 
