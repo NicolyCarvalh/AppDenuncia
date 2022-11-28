@@ -137,7 +137,7 @@ export default class UserScreen extends React.Component<Props> {
 
 const actions = [
   {
-    text: "Nova denúncia",
+    text: "Novo",
     icon: require("assets/images/icons/plus.png"),
     name: "bt_new",
     position: 1,

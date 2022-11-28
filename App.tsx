@@ -31,7 +31,6 @@ export default function App() {
 
             <Stack.Screen component={LoginScreen} name="LoginScreen" options={{ headerShown: false }}></Stack.Screen>
             <Stack.Screen component={UserScreen} name="UserScreen" options={{ headerShown: false }}></Stack.Screen>
-            <Stack.Screen component={ReportScreen} name="ReportScreen" options={{ headerShown: true, title: "Nova Denúncia" }}></Stack.Screen>
             <Stack.Screen component={RegisterScreen} name="RegisterScreen" options={{ headerShown: false }}></Stack.Screen>
 
             <Stack.Screen component={ColetaScreen} name="ColetaScreen" options={{ headerShown: true, title: "Nova Ocorrência - Coleta" }}></Stack.Screen>
