@@ -55,6 +55,30 @@ export default class LocalScreen extends ScreenBase {
       let retorno = this.state.retorno;
       let obs = this.state.obs;
 
+      let erro = textValidator(nome)
+      if(erro){
+        alertMessage('success', 'Sucesso!', `Erro no campo nome. ${erro}`); 
+        return;
+      }
+
+      erro = textValidator(ponto_referencia)
+      if(erro){
+        alertMessage('success', 'Sucesso!', `Erro no campo ponto de referência. ${erro}`); 
+        return;
+      }
+
+      erro = textValidator(contato)
+      if(erro){
+        alertMessage('success', 'Sucesso!', `Erro no campo contato. ${erro}`); 
+        return;
+      }
+
+      erro = textValidator(telefone)
+      if(erro){
+        alertMessage('success', 'Sucesso!', `Erro no campo telefone. ${erro}`); 
+        return;
+      }
+
       let location = await findLocation();
 
       let localModel = new LocalModel(auth.currentUser?.uid, Timestamp.fromDate(new Date()), new GeoPoint(location.coords.latitude, location.coords.longitude)
