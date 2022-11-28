@@ -57,25 +57,25 @@ export default class LocalScreen extends ScreenBase {
 
       let erro = textValidator(nome)
       if(erro){
-        alertMessage('success', 'Sucesso!', `Erro no campo nome. ${erro}`); 
+        alertMessage('error', 'Erro!', `Erro no campo nome. ${erro}`); 
         return;
       }
 
       erro = textValidator(ponto_referencia)
       if(erro){
-        alertMessage('success', 'Sucesso!', `Erro no campo ponto de referência. ${erro}`); 
+        alertMessage('error', 'Erro!', `Erro no campo ponto de referência. ${erro}`); 
         return;
       }
 
       erro = textValidator(contato)
       if(erro){
-        alertMessage('success', 'Sucesso!', `Erro no campo contato. ${erro}`); 
+        alertMessage('error', 'Erro!', `Erro no campo contato. ${erro}`); 
         return;
       }
 
       erro = textValidator(telefone)
       if(erro){
-        alertMessage('success', 'Sucesso!', `Erro no campo telefone. ${erro}`); 
+        alertMessage('error', 'Erro!', `Erro no campo telefone. ${erro}`); 
         return;
       }
 
