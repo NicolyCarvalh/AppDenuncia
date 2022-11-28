@@ -119,7 +119,7 @@ export default class RegisterScreen extends React.Component<Props> {
             <Text style={main.buttonText}>Registrar</Text>
           </TouchableOpacity >
           <TouchableOpacity onPress={() => { this.props.navigation.navigate('LoginScreen') }}>
-            <Text style={{ alignSelf: 'center', margin: 15, color: "#1177d1" }}>Já tenho uma conta.</Text>
+            <Text style={{ alignSelf: 'center', margin: 15, color: "#62990c" }}>Já tenho uma conta.</Text>
           </TouchableOpacity>
 
 

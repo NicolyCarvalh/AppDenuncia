@@ -44,7 +44,7 @@ export default StyleSheet.create({
     width: '100%',
     top: 0,
     position: 'absolute',
-    backgroundColor: '#1177d1',
+    backgroundColor: '#62990c',
     justifyContent: 'center',
     height: '30%',
     alignItems: 'center',
@@ -82,7 +82,7 @@ export default StyleSheet.create({
 
   buttonSignOut:{
     width:"40%",
-    backgroundColor:"#1177d1",
+    backgroundColor:"#62990c",
     borderColor: "#0d5ca2",
     borderRadius:8,
     

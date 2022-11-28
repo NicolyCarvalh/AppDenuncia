@@ -20,7 +20,6 @@ import { collection, query, where, getDocs, onSnapshot, loadBundle} from "fireba
 import { auth, db } from '../config/firebase';
 
 //main button
-import PlusButton from '../components/PlusButton';
 
 //assets
 import user from 'assets/images/user.png';

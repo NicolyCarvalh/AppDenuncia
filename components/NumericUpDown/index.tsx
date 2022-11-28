@@ -47,8 +47,8 @@ export default class NumbericUpDown extends React.Component<Props>{
                   valueType='real'
                   rounded 
                   textColor='#000'
-                  rightButtonBackgroundColor='#1177d1'
-                  leftButtonBackgroundColor='#1177d1'/>
+                  rightButtonBackgroundColor='#62990c'
+                  leftButtonBackgroundColor='#62990c'/>
               </View>
               
             </View>
